@@ -117,9 +117,10 @@ export class LinkInputComponent extends React.Component<any, any> {
 
 
         if (uniqueName !== undefined && uniqueName !== "") {
+            var path = window.location.protocol + '//' + window.location.host;
 
             //get the article
-            const searchResult = fetch("${window.location.origin.toString()}/api/search?auto=0&es_highlight=0&projections=[\"highlights\",\"_created\",\"_updated\",\"_etag\",\"_type\",\"state\",\"embargo\",\"publish_schedule\",\"broadcast\",\"flags\",\"rewrite_of\",\"rewritten_by\",\"expiry\",\"task\",\"type\",\"linked_in_packages\",\"renditions\",\"item_id\",\"guid\",\"_current_version\",\"lock_action\",\"lock_user\",\"lock_session\",\"genre\",\"source\",\"language\",\"last_published_version\",\"archived\",\"associations\",\"queue_state\",\"alt_text\",\"description_text\",\"assignment_id\",\"byline\",\"copyrightholder\",\"copyrightnotice\",\"usageterms\",\"groups\",\"deleted_groups\",\"priority\",\"urgency\",\"word_count\",\"slugline\",\"marked_desks\",\"headline\",\"versioncreated\",\"profile\",\"correction_sequence\",\"anpa_take_key\",\"signal\",\"anpa_category\",\"ingest_provider\"]&repo=archive,published&source={\"query\":{\"filtered\":{\"filter\":{\"and\":[{\"not\":{\"term\":{\"state\":\"spiked\"}}},{\"or\":[{\"and\":[{\"term\":{\"state\":\"draft\"}},{\"term\":{\"original_creator\":\"5cd9a924a7bd87627c5dffcc\"}}]},{\"not\":{\"terms\":{\"state\":[\"draft\"]}}}]},{\"not\":{\"term\":{\"package_type\":\"takes\"}}},{\"and\":[{\"term\":{\"task.desk\":\"5d0b88d910e7ed66382aa4a6\"}},{\"terms\":{\"state\":[\"scheduled\",\"published\",\"corrected\",\"killed\",\"recalled\"]}}]}]},\"query\":{\"query_string\":{\"query\":" + uniqueName + ",\"lenient\":false,\"default_operator\":\"AND\"}}}},\"sort\":[{\"versioncreated\":\"desc\"}],\"from\":0,\"size\":25}",
+            const searchResult = fetch(path+"/api/search?auto=0&es_highlight=0&projections=[\"highlights\",\"_created\",\"_updated\",\"_etag\",\"_type\",\"state\",\"embargo\",\"publish_schedule\",\"broadcast\",\"flags\",\"rewrite_of\",\"rewritten_by\",\"expiry\",\"task\",\"type\",\"linked_in_packages\",\"renditions\",\"item_id\",\"guid\",\"_current_version\",\"lock_action\",\"lock_user\",\"lock_session\",\"genre\",\"source\",\"language\",\"last_published_version\",\"archived\",\"associations\",\"queue_state\",\"alt_text\",\"description_text\",\"assignment_id\",\"byline\",\"copyrightholder\",\"copyrightnotice\",\"usageterms\",\"groups\",\"deleted_groups\",\"priority\",\"urgency\",\"word_count\",\"slugline\",\"marked_desks\",\"headline\",\"versioncreated\",\"profile\",\"correction_sequence\",\"anpa_take_key\",\"signal\",\"anpa_category\",\"ingest_provider\"]&repo=archive,published&source={\"query\":{\"filtered\":{\"filter\":{\"and\":[{\"not\":{\"term\":{\"state\":\"spiked\"}}},{\"or\":[{\"and\":[{\"term\":{\"state\":\"draft\"}},{\"term\":{\"original_creator\":\"5cd9a924a7bd87627c5dffcc\"}}]},{\"not\":{\"terms\":{\"state\":[\"draft\"]}}}]},{\"not\":{\"term\":{\"package_type\":\"takes\"}}},{\"and\":[{\"term\":{\"task.desk\":\"5d0b88d910e7ed66382aa4a6\"}},{\"terms\":{\"state\":[\"scheduled\",\"published\",\"corrected\",\"killed\",\"recalled\"]}}]}]},\"query\":{\"query_string\":{\"query\":" + uniqueName + ",\"lenient\":false,\"default_operator\":\"AND\"}}}},\"sort\":[{\"versioncreated\":\"desc\"}],\"from\":0,\"size\":25}",
                 {
                     method: 'get',
                     headers: new Headers({
@@ -152,6 +153,7 @@ export class LinkInputComponent extends React.Component<any, any> {
                     a.setState({upToDate: true});
                 }
             });
+            var path = window.location.protocol + '//' + window.location.host;
 
 
             //updated article is found
@@ -160,7 +162,7 @@ export class LinkInputComponent extends React.Component<any, any> {
                 while (a.state.upToDate !== true) {
 
                     //get the article
-                    const searchResult = fetch("https://cms.sd.funkedigital.de/api/archive/" + a.state.nextGuid,
+                    const searchResult = fetch(path+"/api/archive/" + a.state.nextGuid,
                         {
                             method: 'get',
                             headers: new Headers({
