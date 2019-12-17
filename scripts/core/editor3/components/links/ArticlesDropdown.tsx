@@ -32,9 +32,10 @@ class ArticlesDropdown extends Component {
         const userInput = e.currentTarget.value;
 
         //search for the articles
+        var path = window.location.protocol + '//' + window.location.host;
 
 
-        const searchResult = fetch('https://cms.sd.funkedigital.de/api/publish_queue?max_results=25&page=1&where={"$and":[{"$or":[{"headline":{"$regex":"' + userInput + '","$options":"-i"}},{"unique_name":"' + userInput + '"}]}]}', {
+        const searchResult = fetch(path+'/api/publish_queue?max_results=25&page=1&where={"$and":[{"$or":[{"headline":{"$regex":"' + userInput + '","$options":"-i"}},{"unique_name":"' + userInput + '"}]}]}', {
             method: "GET",
             headers: new Headers({
                 'accept': 'application/json, text/plain, */*',
