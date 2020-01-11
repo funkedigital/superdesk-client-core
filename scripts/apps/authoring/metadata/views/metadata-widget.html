@@ -43,13 +43,13 @@
 
             <li sd-metadata-list-item data-label="'Language' | translate" ng-if="!isRemovedField('language')">
                 <div sd-meta-dropdown
-                    class="data"
-                    data-item="item"
-                    data-field="language"
-                    data-key="qcode"
-                    data-list="metadata.languages"
-                    ng-disabled="!_editable"
-                    data-change="autosave(item)">
+                     class="data"
+                     data-item="item"
+                     data-field="language"
+                     data-key="qcode"
+                     data-list="metadata.languages"
+                     ng-disabled="!_editable"
+                     data-change="autosave(item)">
                 </div>
             </li>
 
@@ -132,7 +132,7 @@
             <li class="basic-list__item" ng-repeat="cv in cvs track by cv._id" ng-if="item[cv.schema_field] | mergeWords:'name' : cv._id">
                 <label class="basic-list__item-label">{{ cv.display_name | translate }}</label>
                 <div class="basic-list__item-data">
-                        {{getLocaleName(item[cv.schema_field], cv._id)}}
+                    {{getLocaleName(item[cv.schema_field], cv._id)}}
                 </div>
             </li>
 
@@ -205,6 +205,21 @@
             <li sd-metadata-list-item data-label="'Dimensions' | translate" ng-if="item.renditions && item.renditions.original">
                 {{ item.renditions.original.width }} x {{ item.renditions.original.height }}
             </li>
+
+            <li sd-metadata-list-item data-label="'Advertising' | translate">
+                <span sd-switch ng-model="item.flags.advertising"></span>
+            </li>
+
+            <li sd-metadata-list-item data-label="'no follow' | translate">
+                <span sd-switch ng-model="item.flags.noFollow"></span>
+            </li>
+
+            <li sd-metadata-list-item data-label="'no index' | translate">
+                <span sd-switch ng-model="item.flags.noIndex"></span>
+            </li>
+
+            <li sd-metadata-list-item data-label="'Allow Comments' | translate">
+                <span sd-switch ng-model="item.flags.allowComments"></span>
 
             <li sd-metadata-list-item data-label="'Description' | translate" ng-if="item.type == 'picture' && item.archive_description && item.archive_description !== item.description_text">
                 <div sd-html-preview="item.archive_description"></div>
