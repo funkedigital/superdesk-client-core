@@ -185,7 +185,7 @@ function getDefaults(grunt) {
         },
 
         // default timezone for the app
-        defaultTimezone: grunt.option('defaultTimezone') || 'Europe/London',
+        defaultTimezone: grunt.option('defaultTimezone') || 'Europe/Berlin',
 
         // model date and time formats
         model: {
