@@ -20,16 +20,13 @@ export const editor3StateToHtml = (
             SUPERSCRIPT: {element: 'sup'},
         },
         entityStyleFn: (entity: Draft.EntityInstance) => {
-
-
             if (entity.getType() === 'LINK') {
                 const data = entity.getData();
-
 
                 if (data.url) {
                     return {
                         element: 'a',
-                        attributes: {href: data.url, title: link.title},
+                        attributes: {href: data.url},
                     };
                 } else {
                     const link = data.link;
@@ -39,23 +36,15 @@ export const editor3StateToHtml = (
                             element: 'a',
                             attributes: {'data-attachment': link.attachment},
                         };
-                    } else if (link.href != undefined && link.href !== "") {
-
-
-                        let atts = {}
-                        if(link.href !== undefined && link.href !== "")
-                            atts.href = link.href
-                        if(link.nofollow !== undefined && link.nofollow !== "")
-                            atts.nofollow = link.nofollow
-                        if(link.title !== undefined && link.title !== "")
-                            atts.title = link.title
-                        if(link.target !== undefined && link.target !== "")
-                            atts.target = link.target
-
-
+                    } else if (link.target != null) {
                         return {
                             element: 'a',
-                            attributes: atts,
+                            attributes: {href: link.href, target: link.target},
+                        };
+                    } else {
+                        return {
+                            element: 'a',
+                            attributes: {href: link.href},
                         };
                     }
                 }
@@ -69,7 +58,6 @@ export const editor3StateToHtml = (
         inlineStyleFn: (styles: DraftInlineStyle) => {
             let annotationStyleName = styles.find((styleName: string) => annotationsByStyleName[styleName] != null);
 
-
             if (annotationStyleName != null) {
                 return {
                     element: 'span',
@@ -80,8 +68,6 @@ export const editor3StateToHtml = (
             }
         },
     };
-
-    console.log(options);
 
     /*
         If an atomic block is the only content in the editor, it automatically gets line breaks around it.
