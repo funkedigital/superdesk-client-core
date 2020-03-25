@@ -3,6 +3,7 @@ var path = require('path');
 module.exports = function(grunt) {
     var config = {
         pkg: grunt.file.readJSON(path.join(__dirname, 'package.json')),
+        defaultTimezone: 'Europe/Berlin',
         appDir: 'app',
         tmpDir: '.tmp',
         distDir: 'dist',
