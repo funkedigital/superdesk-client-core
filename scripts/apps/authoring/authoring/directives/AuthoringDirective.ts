@@ -454,7 +454,11 @@ export function AuthoringDirective(
                     .then(() => {
                         if (action == 'publish'){
                             $scope.item.flags.republishing = false
-                        } 
+                        } else {
+                            if($scope.item.flags.republishing == null){
+                                $scope.item.flags.republishing = false;
+                            }
+                        }
                         return true;
                     }).then(() => {
                         if($scope.item.flags.republishing === true){
