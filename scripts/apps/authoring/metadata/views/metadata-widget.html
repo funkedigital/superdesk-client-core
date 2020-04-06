@@ -206,6 +206,11 @@
                 {{ item.renditions.original.width }} x {{ item.renditions.original.height }}
             </li>
 
+
+            <li sd-metadata-list-item data-label="'Republishing' | translate">
+                <span sd-switch ng-model="item.flags.republishing"></span>
+            </li>
+
             <li sd-metadata-list-item data-label="'Advertising' | translate">
                 <span sd-switch ng-model="item.flags.advertising"></span>
             </li>
