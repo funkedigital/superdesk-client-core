@@ -451,6 +451,22 @@ export function AuthoringDirective(
                         return result;
                     })
                     .then(() => checkMediaAssociatedToUpdate())
+                    .then(() => {
+                        if (action == 'publish'){
+                            $scope.item.flags.republishing = ""
+                        } else {
+                            if($scope.item.flags.republishing == null || $scope.item.flags.republishing.length == 0){
+                                $scope.item.flags.republishing = null
+                            }
+                        }
+                        return true;
+                    }).then(() => {
+                        if($scope.item.flags.republishing !== null){
+                            $scope.item.flags.republishing_tmp = $scope.item.flags.republishing;
+                            $scope.item.flags.republishing = "";
+                        }
+                        return true;
+                    })
                     .then((result) => {
                         if (result && warnings.length < 1) {
                             return authoring.publish(orig, item, action);
@@ -459,6 +475,7 @@ export function AuthoringDirective(
                     })
                     .then((response) => {
                         notify.success(gettext('Item published.'));
+                        $scope.item.flags.change_types = "";
                         $scope.item = response;
                         $scope.dirty = false;
                         authoringWorkspace.close(true);
