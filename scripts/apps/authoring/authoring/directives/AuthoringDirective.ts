@@ -247,8 +247,8 @@ export function AuthoringDirective(
                 if ($scope.save_enabled()) {
                     modal.confirm(gettext('You have unsaved changes, do you want to continue?'))
                         .then(() => {
-                            _exportHighlight(item._id);
-                        },
+                                _exportHighlight(item._id);
+                            },
                         );
                 } else {
                     _exportHighlight(item._id);
@@ -407,7 +407,7 @@ export function AuthoringDirective(
             }
 
             function getOnPublishMiddlewares()
-            : Array<IExtensionActivationResult['contributions']['entities']['article']['onPublish']> {
+                : Array<IExtensionActivationResult['contributions']['entities']['article']['onPublish']> {
                 return flatMap(
                     Object.values(extensions).map(({activationResult}) => activationResult),
                     (activationResult) =>
@@ -451,6 +451,20 @@ export function AuthoringDirective(
                         return result;
                     })
                     .then(() => checkMediaAssociatedToUpdate())
+                    .then(() => {
+                        if (action == 'publish'){
+                            $scope.item.flags.republishing = false;
+                        }
+                        return true;
+                    }).then(() => {
+                        if($scope.item.flags.republishing === true){
+                            $scope.item.flags.republishing_tmp = true;
+                            $scope.item.flags.republishing = false;
+                        }else {
+                            $scope.item.flags.republishing_tmp = false;
+                        }
+                        return true;
+                    })
                     .then((result) => {
                         if (result && warnings.length < 1) {
                             return authoring.publish(orig, item, action);
@@ -459,6 +473,7 @@ export function AuthoringDirective(
                     })
                     .then((response: IArticle) => {
                         notify.success(gettext('Item published.'));
+                        $scope.item.flags.republishing = false;
                         $scope.item = response;
                         $scope.dirty = false;
                         authoringWorkspace.close(true);
